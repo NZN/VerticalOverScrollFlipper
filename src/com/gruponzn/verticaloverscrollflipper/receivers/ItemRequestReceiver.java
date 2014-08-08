@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.widget.ListView;
 
 import com.gruponzn.verticaloverscrollflipper.OverScrollUtil;
+import com.gruponzn.verticaloverscrollflipper.R;
 
 /**
  * Recebe o index do próximo item a ser exibido na rolagem e encaminha para
@@ -35,7 +36,7 @@ public class ItemRequestReceiver extends BroadcastReceiver {
 					&& mName.equals(intent.getExtras().getSerializable(OverScrollUtil.FLAG_LIST_CALLER))) {
 				position = intent.getIntExtra(OverScrollUtil.ITEM_POSITION, 0);
 
-				Intent broadcast = new Intent(OverScrollUtil.ACTION_ITEM_RESPONSE);
+				Intent broadcast = new Intent(context.getString(R.string.app_name) + "." + OverScrollUtil.ACTION_ITEM_RESPONSE);
 
 				broadcast.putExtra(OverScrollUtil.ITEM_POSITION, position);
 				broadcast.putExtra(OverScrollUtil.FLAG_LIST_CALLER, mName);
@@ -45,7 +46,7 @@ public class ItemRequestReceiver extends BroadcastReceiver {
 			}
 		} catch (RuntimeException ep) {
 			if (ep instanceof IndexOutOfBoundsException) {
-				Intent broadcast = new Intent(OverScrollUtil.ACTION_ITEM_RESPONSE);
+				Intent broadcast = new Intent(context.getString(R.string.app_name) + "." + OverScrollUtil.ACTION_ITEM_RESPONSE);
 
 				broadcast.putExtra(OverScrollUtil.ITEM_POSITION, --position);
 				broadcast.putExtra(OverScrollUtil.FLAG_LIST_CALLER, mName);
