@@ -98,7 +98,7 @@ public class OverScrollUtil implements OverScrollListener {
 	public void attach(Activity activity, String itemName, String itemList, ViewFlipper viewFlipper) {
 		if (!(activity instanceof ItemChangeListener))
 			throw new IllegalArgumentException("A Activity deve implementar a interface ItemChangeListener");
-
+		
 		this.mActivity = activity;
 		this.mItemName = itemName;
 		this.mItemList = itemList;
@@ -246,9 +246,6 @@ public class OverScrollUtil implements OverScrollListener {
 		switchFooter(false);
 		switchHeader(false);
 
-		// Animation anim = AnimationUtils.loadAnimation(mActivity,
-		// com.gruponzn.verticaloverscrollflipper.R.anim.down_up);
-
 		mViewFlipper.setInAnimation(upIn);
 		mViewFlipper.setOutAnimation(upOut);
 		mViewFlipper.showNext();
@@ -307,10 +304,13 @@ public class OverScrollUtil implements OverScrollListener {
 
 		mChangeListener = null;
 
-		mViewFlipper.removeAllViews();
-		mViewFlipper = null;
+		if (null != mViewFlipper) {
+    		mViewFlipper.removeAllViews();
+    		mViewFlipper = null;
+		}
 
-		context.unregisterReceiver(mItemReceiver);
+		if (null != mItemReceiver)
+			context.unregisterReceiver(mItemReceiver);
 
 		mItemReceiver = null;
 
