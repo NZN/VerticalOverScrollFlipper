@@ -99,6 +99,10 @@ public class OverScrollUtil implements OverScrollListener {
 		if (!(activity instanceof ItemChangeListener))
 			throw new IllegalArgumentException("A Activity deve implementar a interface ItemChangeListener");
 		
+		if (null != mActivity && null != mItemReceiver) {
+			mActivity.unregisterReceiver(mItemReceiver);
+		}
+		
 		this.mActivity = activity;
 		this.mItemName = itemName;
 		this.mItemList = itemList;
