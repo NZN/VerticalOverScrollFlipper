@@ -6,7 +6,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
-import com.gruponzn.tecmundo.helpers.itrf.IGoogleTracker;
+import com.gruponzn.verticaloverscrollflipper.utils.itrf.IGoogleTracker;
 
 /**
  * Classe que auxilia a integracao com o SDK do Google Analytics.
@@ -42,7 +42,7 @@ public class GoogleTrackerUtil {
 	 * @param context
 	 * @param category Nome da categoria
 	 * @param action Nome da ação
-	 * @param label Descricão ou objeto envolvido na ação
+	 * @param label Descrição ou objeto envolvido na ação
 	 */
 	public static void trackEvent(Context context, String category, String action, String label) {
 		trackEvent(context, category, action, label, 1);
@@ -88,7 +88,7 @@ public class GoogleTrackerUtil {
 	}
 	
 	/**
-	 * Envia nome de tela para relattórios utilizados no Google Analytics
+	 * Envia nome de tela para relatórios utilizados no Google Analytics
 	 * 
 	 * @param context 
 	 * @param params Parâmetros adicionais utilizados para gerar o nome na tela (Exemplo: /program/2000)
@@ -149,7 +149,7 @@ public class GoogleTrackerUtil {
 	/**
 	 * Cria tracker do Analytics
 	 * 
-	 * Seu objetivo é facilitar futuras alterações caso
+	 * Seu objetivo é facilitar futuras alteraçães caso
 	 * ocorram mudanças no SDK do Analytics.
 	 * 
 	 * A implementação de tracker atual (EasyTracker) utiliza o arquivo 'analytics.xml'
