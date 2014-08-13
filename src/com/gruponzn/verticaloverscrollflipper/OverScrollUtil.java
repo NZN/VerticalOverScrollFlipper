@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
 import com.gruponzn.verticaloverscrollflipper.receivers.listeners.ItemChangeListener;
+import com.gruponzn.verticaloverscrollflipper.utils.GoogleTrackerUtil;
 import com.gruponzn.verticaloverscrollflipper.widgets.listeners.OverScrollListener;
 
 public class OverScrollUtil implements OverScrollListener {
@@ -262,8 +263,7 @@ public class OverScrollUtil implements OverScrollListener {
 			mViewFlipper.removeViewAt(0);
 		}
 
-		// GoogleTrackerUtil.trackEvent(this, "news", "swype_up",
-		// mArticle.getUrl());
+		GoogleTrackerUtil.trackEvent(mActivity, "news", "swype_up", getCurrentView().toString());
 	}
 
 	public void rollDown() {
@@ -282,8 +282,7 @@ public class OverScrollUtil implements OverScrollListener {
 			mViewFlipper.removeViewAt(OverScrollUtil.MAX_NUMBER_OF_ARTICLES);
 		}
 
-		// GoogleTrackerUtil.trackEvent(this, "news", "swype_down",
-		// mArticle.getUrl());
+		GoogleTrackerUtil.trackEvent(mActivity, "news", "swype_up", getCurrentView().toString());
 	}
 
 	public void completedViewLoading() {
