@@ -211,7 +211,7 @@ public class OverScrollUtil implements OverScrollListener {
 
 	private void registerResponseReceiver(String identifier) {
 		mItemReceiver = new ItemResponseReceiver();
-		mActivity.registerReceiver(mItemReceiver, new IntentFilter(mActivity.getString(R.string.app_name) + "." + ACTION_ITEM_RESPONSE));
+		mActivity.registerReceiver(mItemReceiver, new IntentFilter(mActivity.getBaseContext().getPackageName() + "." + ACTION_ITEM_RESPONSE));
 	}
 
 	private void fetchItem(int position) {
