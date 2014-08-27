@@ -316,6 +316,8 @@ public class OverScrollUtil implements OverScrollListener {
 			context.unregisterReceiver(mItemReceiver);
 
 		mItemReceiver = null;
+		mNextItem = null;
+		mPreviousItem = null;
 
 		mFetchingState = Fetching.IDLE;
 	}
