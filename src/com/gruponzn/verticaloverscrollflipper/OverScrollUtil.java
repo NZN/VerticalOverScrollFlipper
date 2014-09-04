@@ -16,6 +16,7 @@ import android.widget.ViewFlipper;
 
 import com.gruponzn.verticaloverscrollflipper.receivers.listeners.ItemChangeListener;
 import com.gruponzn.verticaloverscrollflipper.utils.GoogleTrackerUtil;
+import com.gruponzn.verticaloverscrollflipper.utils.PreferencesUtil;
 import com.gruponzn.verticaloverscrollflipper.widgets.listeners.OverScrollListener;
 
 public class OverScrollUtil implements OverScrollListener {
@@ -84,8 +85,6 @@ public class OverScrollUtil implements OverScrollListener {
 
 	private Parcelable mNextItem;
 	private Parcelable mPreviousItem;
-
-	private boolean overScrollEnabled = true;
 
 	private OverScrollUtil() {
 
@@ -161,15 +160,15 @@ public class OverScrollUtil implements OverScrollListener {
 	}
 
 	public void setOverScrollEnabled(boolean overScrollEnabled) {
-		this.overScrollEnabled = overScrollEnabled;
+		PreferencesUtil.setOverScrollEnabled(mActivity, overScrollEnabled);
 	}
 
 	public boolean isOverScrollEnabled() {
-		return overScrollEnabled;
+		return PreferencesUtil.isOverScrollEnabled(mActivity);
 	}
 
 	public boolean isOverScrollPossible() {
-		return overScrollEnabled && mFetchingState != Fetching.STANDALONE;
+		return isOverScrollEnabled() && mFetchingState != Fetching.STANDALONE;
 	}
 
 	@Override
@@ -196,7 +195,7 @@ public class OverScrollUtil implements OverScrollListener {
 	public void overScrolled(boolean next) {
 		if (!isOverScrollEnabled())
 			return;
-		
+
 		if (isFlipping() || mFetchingState != Fetching.IDLE)
 			return;
 
