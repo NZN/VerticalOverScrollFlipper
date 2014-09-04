@@ -16,11 +16,7 @@ public class PreferencesUtil {
 	}
 
 	private static SharedPreferences getSharedPreferences(Context context, String key) {
-		String packageName = context.getPackageName();
-		if (packageName == null || packageName.length() == 0)
-			packageName = "com.gruponzn.verticaloverscrollflipper";
-
-		String preferencesKey = packageName + "." + key;
+		String preferencesKey = context.getPackageName() + "." + key;
 		return context.getSharedPreferences(preferencesKey, Context.MODE_PRIVATE);
 	}
 }

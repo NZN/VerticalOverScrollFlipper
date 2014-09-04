@@ -9,6 +9,6 @@ public class OverScrollCheckBoxListener implements CheckBox.OnCheckedChangeListe
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		OverScrollUtil.getInstance().setOverScrollEnabled(isChecked);
+		OverScrollUtil.getInstance().setOverScrollEnabled(buttonView.getContext(), isChecked);
 	}
 }

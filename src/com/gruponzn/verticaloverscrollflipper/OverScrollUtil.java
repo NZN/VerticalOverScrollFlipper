@@ -159,16 +159,16 @@ public class OverScrollUtil implements OverScrollListener {
 		return null == mViewFlipper ? true : mViewFlipper.isFlipping();
 	}
 
-	public void setOverScrollEnabled(boolean overScrollEnabled) {
-		PreferencesUtil.setOverScrollEnabled(mActivity, overScrollEnabled);
+	public void setOverScrollEnabled(Context context, boolean overScrollEnabled) {
+		PreferencesUtil.setOverScrollEnabled(context, overScrollEnabled);
 	}
 
-	public boolean isOverScrollEnabled() {
-		return PreferencesUtil.isOverScrollEnabled(mActivity);
+	public boolean isOverScrollEnabled(Context context) {
+		return PreferencesUtil.isOverScrollEnabled(context);
 	}
 
 	public boolean isOverScrollPossible() {
-		return isOverScrollEnabled() && mFetchingState != Fetching.STANDALONE;
+		return isOverScrollEnabled(mActivity) && mFetchingState != Fetching.STANDALONE;
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class OverScrollUtil implements OverScrollListener {
 
 	@Override
 	public void overScrolled(boolean next) {
-		if (!isOverScrollEnabled())
+		if (!isOverScrollEnabled(mActivity))
 			return;
 
 		if (isFlipping() || mFetchingState != Fetching.IDLE)
