@@ -85,6 +85,8 @@ public class OverScrollUtil implements OverScrollListener {
 	private Parcelable mNextItem;
 	private Parcelable mPreviousItem;
 
+	private boolean overScrollEnabled = true;
+
 	private OverScrollUtil() {
 
 	}
@@ -99,11 +101,11 @@ public class OverScrollUtil implements OverScrollListener {
 	public void attach(Activity activity, String itemName, String itemList, ViewFlipper viewFlipper) {
 		if (!(activity instanceof ItemChangeListener))
 			throw new IllegalArgumentException("A Activity deve implementar a interface ItemChangeListener");
-		
+
 		if (null != mActivity && null != mItemReceiver) {
 			mActivity.unregisterReceiver(mItemReceiver);
 		}
-		
+
 		this.mActivity = activity;
 		this.mItemName = itemName;
 		this.mItemList = itemList;
@@ -158,8 +160,16 @@ public class OverScrollUtil implements OverScrollListener {
 		return null == mViewFlipper ? true : mViewFlipper.isFlipping();
 	}
 
+	public void setOverScrollEnabled(boolean overScrollEnabled) {
+		this.overScrollEnabled = overScrollEnabled;
+	}
+
+	public boolean isOverScrollEnabled() {
+		return overScrollEnabled;
+	}
+
 	public boolean isOverScrollPossible() {
-		return mFetchingState != Fetching.STANDALONE;
+		return overScrollEnabled && mFetchingState != Fetching.STANDALONE;
 	}
 
 	@Override
@@ -184,6 +194,9 @@ public class OverScrollUtil implements OverScrollListener {
 
 	@Override
 	public void overScrolled(boolean next) {
+		if (!isOverScrollEnabled())
+			return;
+		
 		if (isFlipping() || mFetchingState != Fetching.IDLE)
 			return;
 
@@ -211,7 +224,8 @@ public class OverScrollUtil implements OverScrollListener {
 
 	private void registerResponseReceiver(String identifier) {
 		mItemReceiver = new ItemResponseReceiver();
-		mActivity.registerReceiver(mItemReceiver, new IntentFilter(mActivity.getString(R.string.app_name) + "." + ACTION_ITEM_RESPONSE));
+		mActivity.registerReceiver(mItemReceiver, new IntentFilter(mActivity.getString(R.string.app_name) + "."
+				+ ACTION_ITEM_RESPONSE));
 	}
 
 	private void fetchItem(int position) {
@@ -308,8 +322,8 @@ public class OverScrollUtil implements OverScrollListener {
 		mChangeListener = null;
 
 		if (null != mViewFlipper) {
-    		mViewFlipper.removeAllViews();
-    		mViewFlipper = null;
+			mViewFlipper.removeAllViews();
+			mViewFlipper = null;
 		}
 
 		if (null != mItemReceiver)
@@ -344,7 +358,8 @@ public class OverScrollUtil implements OverScrollListener {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (intent.getAction().equals(mActivity.getString(R.string.app_name) + "." + OverScrollUtil.ACTION_ITEM_RESPONSE)
+			if (intent.getAction().equals(
+					mActivity.getString(R.string.app_name) + "." + OverScrollUtil.ACTION_ITEM_RESPONSE)
 					&& mItemList.equals(intent.getExtras().getString(OverScrollUtil.FLAG_LIST_CALLER))) {
 
 				Log.w(getClass().getSimpleName(), intent.toString());
