@@ -114,7 +114,7 @@ public class OverScrollUtil implements OverScrollListener {
 		registerResponseReceiver(activity.getString(R.string.app_name));
 
 		if (null == mItemList)
-			mFetchingState = Fetching.STANDALONE;
+			changeState(Fetching.STANDALONE);
 	}
 
 	public void addView(View view) {
@@ -242,7 +242,7 @@ public class OverScrollUtil implements OverScrollListener {
 		if (mFetchingState != Fetching.IDLE)
 			return;
 
-		mFetchingState = Fetching.NEXT;
+		changeState(Fetching.NEXT);
 		fetchItem(mCurrentGlobalPosition + 1);
 	}
 
@@ -256,7 +256,7 @@ public class OverScrollUtil implements OverScrollListener {
 			return;
 		}
 
-		mFetchingState = Fetching.PREVIOUS;
+		changeState(Fetching.PREVIOUS);
 		fetchItem(mCurrentGlobalPosition - 1);
 	}
 
@@ -302,7 +302,7 @@ public class OverScrollUtil implements OverScrollListener {
 		int position = mFetchingState == Fetching.NEXT ? mNextPosition : mPreviousPosition;
 
 		if (mFetchingState != Fetching.STANDALONE)
-			mFetchingState = Fetching.IDLE;
+			changeState(Fetching.IDLE);
 
 		if (position != -1) {
 			Intent intent = new Intent(OverScrollUtil.ACTION_SELECTION);
@@ -332,7 +332,7 @@ public class OverScrollUtil implements OverScrollListener {
 		mNextItem = null;
 		mPreviousItem = null;
 
-		mFetchingState = Fetching.IDLE;
+		changeState(Fetching.IDLE);
 	}
 
 	private void recycleView(View view) {
@@ -351,6 +351,12 @@ public class OverScrollUtil implements OverScrollListener {
 				}
 			}
 		}
+	}
+	
+	private void changeState(Fetching newState) {
+		Fetching old = mFetchingState;
+		mFetchingState = newState;
+		Log.i(getClass().getSimpleName(), "FETCHING STATE: OLD[" + old + "] NEW[" + mFetchingState + "]");
 	}
 
 	private class ItemResponseReceiver extends BroadcastReceiver {
@@ -389,7 +395,7 @@ public class OverScrollUtil implements OverScrollListener {
 						}
 					}
 
-					mFetchingState = Fetching.IDLE;
+					changeState(Fetching.IDLE);
 				} else {
 					Log.e(getClass().getSimpleName(), "onReceive > No Extras received");
 				}
