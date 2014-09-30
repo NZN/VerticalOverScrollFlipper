@@ -29,6 +29,7 @@ public class ItemSelectionReceiver extends BroadcastReceiver {
 			if (intent.getAction().equals(OverScrollUtil.ACTION_SELECTION) && null != intent.getExtras()
 					&& mName.equals(intent.getExtras().getSerializable(OverScrollUtil.FLAG_LIST_CALLER))) {
 				int position = intent.getIntExtra(OverScrollUtil.ITEM_POSITION, 0);
+				mList.smoothScrollToPosition(position);
 				mList.setSelection(position);
 			}
 		} catch (RuntimeException ep) {

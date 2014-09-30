@@ -102,7 +102,11 @@ public class OverScrollUtil implements OverScrollListener {
 			throw new IllegalArgumentException("A Activity deve implementar a interface ItemChangeListener");
 
 		if (null != mActivity && null != mItemReceiver) {
-			mActivity.unregisterReceiver(mItemReceiver);
+			try {
+				mActivity.unregisterReceiver(mItemReceiver);
+			} catch (Exception e) {
+				Log.w(getClass().getSimpleName(), e.getMessage());
+			}
 		}
 
 		this.mActivity = activity;
@@ -352,7 +356,7 @@ public class OverScrollUtil implements OverScrollListener {
 			}
 		}
 	}
-	
+
 	private void changeState(Fetching newState) {
 		Fetching old = mFetchingState;
 		mFetchingState = newState;

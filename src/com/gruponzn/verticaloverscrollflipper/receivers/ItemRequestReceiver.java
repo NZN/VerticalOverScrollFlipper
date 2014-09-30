@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.gruponzn.verticaloverscrollflipper.OverScrollUtil;
@@ -46,6 +47,8 @@ public class ItemRequestReceiver extends BroadcastReceiver {
 			}
 		} catch (RuntimeException ep) {
 			if (ep instanceof IndexOutOfBoundsException) {
+				Log.e(getClass().getSimpleName(), "List[" + mName + "] reached it's bottom at [" + position + "]");
+				
 				Intent broadcast = new Intent(context.getString(R.string.app_name) + "." + OverScrollUtil.ACTION_ITEM_RESPONSE);
 
 				broadcast.putExtra(OverScrollUtil.ITEM_POSITION, --position);

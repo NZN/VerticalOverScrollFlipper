@@ -14,7 +14,7 @@ public class PreferencesUtil {
 	public static boolean isOverScrollEnabled(Context context) {
 		return getSharedPreferences(context, OVERSCROLL_ENABLED).getBoolean(OVERSCROLL_ENABLED, true);
 	}
-
+	
 	private static SharedPreferences getSharedPreferences(Context context, String key) {
 		String preferencesKey = context.getPackageName() + "." + key;
 		return context.getSharedPreferences(preferencesKey, Context.MODE_PRIVATE);
